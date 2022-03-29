@@ -5,7 +5,7 @@ create database swimming_school;
 select DATABASE();
 
 -- to switch database
-use swimming_school;
+use swimming_school; 
 
 -- create table <table name>
 -- <name of column> <data type> <options>
