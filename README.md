@@ -1,3 +1,4 @@
+# Use SqlDBM.com for logical diagram 
 
 # Logging in via the terminal
 
