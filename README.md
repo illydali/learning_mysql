@@ -1,5 +1,8 @@
 # Use SqlDBM.com for logical diagram 
 
+# To import in a database - eg Chinook
+mysql -u root < chinook.sql
+
 # Logging in via the terminal
 
 For Gitpod, PC

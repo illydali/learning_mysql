@@ -84,14 +84,17 @@ select firstName, lastName city,  addressLine1, addressLine2,  FROM employees jo
     ORDER BY firstName;
 
 
+-- show all customers with their sales rep, even for customers with no sales rep (null)
 select * from customers join employees 
     ON customers.salesRepEmployeeNumber = employees.employeeNumber
 
-
+-- count how many customers have sales rep
+-- due to inner join, for a row in the left hand table to appear in the joined table,
+-- it must have a corresponding row in the right hand table
 select count(*) from customers join employees 
 	ON customers.salesRepEmployeeNumber = employees.employeeNumber
 
--- show all customers with their sales rep, even for customers with no sales rep (null)
+-- show all customers with their sales rep, even for customers with no sales rep
+-- LEFT JOIN is useful if you want a comprehensive breakdown of your tables
 select * from customers left join employees 
 	ON customers.salesRepEmployeeNumber = employees.employeeNumber;
--- LEFT JOIN is useful if u want a comphensive breakdown of your tabes. 

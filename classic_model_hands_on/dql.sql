@@ -17,7 +17,8 @@ and (firstName like '%son%' or lastName like '%son%');
 SELECT customerName, contactLastName, contactFirstName, orders.customerNumber FROM customers join orders
 	on customers.customerNumber = orders.customerNumber
 	where orders.customerNumber = 124;
-
+		-- shortcut to select all the columns from the orders table 
+SELECT orders.*  
 -- 6 - Show the name of the product, together with the order details,  for each order line from the orderdetails table
 SELECT productName, orderNumber, orderdetails.productCode, quantityOrdered, priceEach, orderLineNumber 
 FROM orderdetails join products
