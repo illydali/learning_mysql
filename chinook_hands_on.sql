@@ -12,13 +12,18 @@ SELECT * FROM Employee WHERE Title like '%sales%';
 
 -- 5 - Display the titles of all tracks which has the genre "easy listening"
 SELECT Track.Name FROM Track JOIN Genre 
-ON Track.GenreID = Genre.GenreId
+ON Track.GenreId = Genre.GenreId
 WHERE Genre.Name like '%easy listening%';
 
 -- 6 - Display all the tracks from all albums along with the genre of each track
 SELECT Track.Name, Genre.Name, Title from Album join Track on Album.AlbumId = Track.AlbumId join Genre 
 on Genre.GenreId = Track.GenreId
 limit 10;
+
+-- no need 3 joins
+SELECT Track.Name, Genre.Name from Track join Genre 
+ON Track.GenreId = Genre.GenreId 
+where AlbumId is not null;
 
 -- 7 - Using the Invoice table, show the average payment made for each country
 SELECT AVG(Total), BillingCountry FROM Invoice
@@ -37,7 +42,8 @@ GROUP BY CustomerId
 having sum(Total) > 10;
 
 -- 10 - Display the average length of Jazz song (that is, the genre of the song is Jazz) for each album
-select AVG(Milliseconds), Title from Genre JOIN Track
+select AVG(Milliseconds) as TotalLength, Title from Genre JOIN Track
 ON Genre.GenreId = Track.GenreId JOIN Album
 ON Album.AlbumId = Track.AlbumId
-group by Genre.name="jazz", Title;
+WHERE Genre.name="Jazz"
+group by Genre.name, Album.Title;
