@@ -25,15 +25,75 @@ FROM orderdetails join products
 ON orderdetails.productCode = products.productCode;
 
 -- 7 - Display all the payments made by each company from the USA. 
+SELECT amount, customerName, country FROM customers JOIN payments 
+ON customers.customerNumber = payments.customerNumber
+WHERE country='USA';
 
 -- 8 - Show how many employees are there for each state in the USA		
+SELECT employees.officeCode, addressLine1, state, count(*) as 'EmployeeCount'
+ 	FROM employees JOIN offices
+	ON employees.officeCode = offices.officecode
+WHERE country='USA'
+GROUP BY officeCode, state;
 
 -- 9 - From the payments table, display the average amount spent by each customer. Display the name of the customer as well.
+SELECT AVG(amount), customerName as 'Company Name' FROM payments JOIN customers
+ON customers.customerNumber = payments.customerNumber
+GROUP BY customerName
 
 -- 10 - From the payments table, display the average amount spent by each customer but only if the customer has spent a minimum of 10,000 dollars.
+SELECT 	AVG(amount) as 'Average',
+        customerName AS 'Company Name'
+FROM payments
+JOIN customers
+    ON customers.customerNumber = payments.customerNumber
+HAVING SUM( amount ) > 10000
+GROUP BY customerName
+ORDER BY AVG(amount);
+
+-- Having is to sort on each group after you have grouped by
+-- Where is to sort after the join before the group by
 
 -- 11  - For each product, display how many times it was ordered, and display the results with the most orders first and only show the top ten.
+SELECT COUNT(*),
+         products.productCode,
+         productName
+FROM orderdetails
+JOIN products
+    ON products.productCode = orderdetails.productCode
+GROUP BY  productCode, productName
+ORDER BY  count(*) DESC limit 10;
+
+-- correct answer 
+select sum(quantityOrdered), orderdetails.productCode, productName from orderdetails join products
+ on orderdetails.productCode = products.productCode
+ group by orderdetails.productCode, productName
+ order by sum(quantityOrdered) DESC
+ limit 10
 
 -- 12 - Display all orders made between Jan 2003 and Dec 2003
+SELECT * FROM orders
+where orderDate >= '2003-01-01' 
+and orderDate <= '2003-12-31';
+
+-- another way
+SELECT * FROM orders
+WHERE YEAR(orderDate) = '2003';
 
 -- 13 - Display all the number of orders made, per month, between Jan 2003 and Dec 2003
+SELECT count(*) ,month(orderDate) FROM orders
+where orderDate >= '2003-01-01' 
+and orderDate <= '2003-12-01'
+group by month(orderDate);
+
+-- correct answer
+select MONTH(orderDate), COUNT(*) from orders join orderdetails
+ ON orders.orderNumber = orderdetails.orderNumber
+ WHERE YEAR(orderDate) = 2003
+ GROUP BY MONTH(orderDate)
+
+-- correct answer part 2 - Paul's 
+select YEAR(orderDate), MONTH(orderDate), COUNT(*) from orders join orderdetails
+ ON orders.orderNumber = orderdetails.orderNumber
+ WHERE YEAR(orderDate) >= 2003 AND YEAR(orderDate) <=2004
+ GROUP BY YEAR(orderDate), MONTH(orderDate)

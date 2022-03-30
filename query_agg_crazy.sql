@@ -2,7 +2,7 @@
 -- *** AGGREGATES ***
 
 -- find the average creditLimit among customers
-SELECT AVG(creditLimit FROM customers;
+SELECT AVG(creditLimit) FROM customers;
 
 -- count how many there are 
 select count (*) from customers;
@@ -48,6 +48,8 @@ GROUP BY country
 
 -- tables joined tog first, then keep only usa, then group by 
 -- order of this stuff: from-join, where, group by, select, having 
+--                                                      telling count result to have column 
+--                                                      named EmployeeCount 
 SELECT employees.officeCode, addressLine1, addressLine2, count(*) as 'EmployeeCount'
  	FROM employees JOIN offices
 	ON employees.officeCode = offices.officecode
@@ -58,7 +60,7 @@ HAVING EmployeeCount >= 2
 
 -- 1. from/join 2. where. 3. group by. 4. select count (*) 5. having 6. order by 7. limit 
 SELECT COUNT(*), products.productCode, productName FROM orderdetails 
-join products on products.productCode = orderdetais.productCode
+join products on products.productCode = orderdetails.productCode
 where productLine = 'Classic Cars'
 group by productCode, productName
 having count(*) >= 28
